@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "cubecen": {
+      "type": "http",
+      "url": "https://mcp.cubecen.com/mcp"
+    }
+  }
+}

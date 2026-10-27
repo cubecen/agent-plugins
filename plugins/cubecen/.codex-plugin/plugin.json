@@ -1,0 +1,44 @@
+{
+  "name": "cubecen",
+  "version": "0.1.0",
+  "description": "Deploy the app you are working on to Cubecen, wire a Postgres database, and fix failed deploys from the logs.",
+  "author": {
+    "name": "Cubecen",
+    "url": "https://cubecen.com"
+  },
+  "homepage": "https://cubecen.com",
+  "repository": "https://github.com/cubecen/agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "deploy",
+    "hosting",
+    "paas",
+    "github",
+    "postgres",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Cubecen",
+    "shortDescription": "Deploy your app from GitHub and get a live URL",
+    "longDescription": "Deploy the repository you are working on to Cubecen and get a live URL. The agent checks the app is ready (port, start command, framework settings), creates the cube, waits for the release, wires a managed Postgres database, and reads the build and runtime logs to fix a failed deploy.",
+    "developerName": "Cubecen",
+    "category": "Coding",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://cubecen.com",
+    "privacyPolicyURL": "https://cubecen.com/privacy",
+    "termsOfServiceURL": "https://cubecen.com/terms",
+    "defaultPrompt": [
+      "Deploy this app to Cubecen.",
+      "Why did my last Cubecen deploy fail?",
+      "Add a Postgres database to my Cubecen app."
+    ],
+    "brandColor": "#256FFF",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "cubecen",
+  "description": "Cubecen plugins: deploy apps from GitHub with your coding agent.",
+  "owner": {
+    "name": "Cubecen",
+    "url": "https://cubecen.com"
+  },
+  "plugins": [
+    {
+      "name": "cubecen",
+      "source": "./plugins/cubecen",
+      "description": "Deploy the app you are working on to Cubecen, wire a Postgres database, and fix failed deploys from the logs.",
+      "category": "deployment"
+    }
+  ]
+}

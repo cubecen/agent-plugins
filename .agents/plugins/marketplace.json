@@ -1,0 +1,20 @@
+{
+  "name": "cubecen",
+  "interface": {
+    "displayName": "Cubecen"
+  },
+  "plugins": [
+    {
+      "name": "cubecen",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cubecen"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    }
+  ]
+}
