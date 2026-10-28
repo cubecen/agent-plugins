@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: s07-vite-spa
+context:
+  scaffold_script: scaffold.sh

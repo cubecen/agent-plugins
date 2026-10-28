@@ -1,0 +1,5 @@
+3 lines
+
+10:04:12 [rollout] Listening on http://127.0.0.1:3000
+10:04:41 [rollout] Error: the app did not accept connections on port 8080 within 60s
+10:04:41 event Warning Unhealthy Pod/app-7784d-fk4jm: Readiness probe failed: dial tcp 10.42.1.17:8080: connect: connection refused
