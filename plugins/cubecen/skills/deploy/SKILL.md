@@ -1,12 +1,12 @@
 ---
 name: deploy
-description: Use when the user asks to deploy, ship, host, publish or put an app online on Cubecen, to update a Cubecen deployment after changes, to set up a cube for a repository, or to deploy several apps of one repository (a monorepo, a web and an API).
+description: Use when the user asks to deploy, ship, host, publish or put an app online on Cubecen, asks whether a push deployed, or wants to update a Cubecen deployment after changes, set up a cube for a repository, or deploy several apps of one repository (a monorepo, a web and an API).
 ---
 
 # Deploy to Cubecen
 
 Cubecen builds from GitHub, not from this machine: what is pushed is what
-deploys. Cubecen tools take slugs; never ask the user for an ID.
+deploys.
 
 ## 1. The repository
 
@@ -17,35 +17,34 @@ deploys. Cubecen tools take slugs; never ask the user for an ID.
   (`git rev-parse --show-prefix`). More than one app in the repository:
   read `references/multi-service.md` first.
 - The branch: `git branch --show-current`.
+- `git` fails? Read `.git/config` (origin's `url`), `.git/HEAD` (the
+  branch) and `.git/refs/heads/<branch>` or `.git/packed-refs` (the commit).
 
 ## 2. What GitHub has
 
 `git status --porcelain` and `git log @{u}..` show work that is not pushed.
 When the user wants it live, show it and ask before you commit and push.
 
-## 3. Ready to run?
-
-On an app's first deploy, or when its start, port or framework look
-unusual, follow the `prepare-app` skill.
-
-## 4. Create or deploy
+## 3. Create or deploy
 
 1. `list_applications` with `repository: "owner/name"` (and `app_root`)
    finds the cube.
 2. **A cube exists.** A push to the branch it tracks starts its release:
    `wait_for_release` with `commit` (the pushed SHA). A cube made from a
    public repository's link never deploys on push: call `deploy`.
-3. **No cube.** `create_application` with `repository: "owner/name"` and
-   `app_root`, plus what `prepare-app` found (`port`, `start_command`,
-   `build_command`, `output_directory`). It deploys and names the release to
-   wait for. When the app needs variables or a database before it can
-   start, pass `deploy: false`, do step 5, then `deploy`.
+3. **No cube: a first deploy.** First load the `prepare-app` skill and do
+   its checks (start, port, Dockerfile). Then `create_application` with
+   `repository: "owner/name"` and `app_root`, plus what they found (`port`,
+   `start_command`, `build_command`, `output_directory`). It deploys and
+   names the release to wait for. When the app needs variables or a
+   database before it can start, pass `deploy: false`, do section 4, then
+   `deploy`.
 4. **`REPOSITORY_NOT_ACCESSIBLE`**: the repository is private and no GitHub
    connection covers it, or the connection covers selected repositories
    only. Call `connect_github`, give the user its link, and wait until they
    say it is done; then create again.
 
-## 5. Environment and database
+## 4. Environment and database
 
 - Variables the app reads (`.env.example`, the README, `process.env`,
   `os.environ`, `os.Getenv`): `set_env`, with `secret: true` for passwords,
@@ -59,7 +58,7 @@ unusual, follow the `prepare-app` skill.
 - Env changes apply with the next `redeploy`, or `deploy` for `build: true`
   keys.
 
-## 6. Wait and report
+## 5. Wait and report
 
 `wait_for_release` with the release (or `commit`), again while it is not
 terminal. Live: give the URL. Failed: its answer carries the diagnosis;
