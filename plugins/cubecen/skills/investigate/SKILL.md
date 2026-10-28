@@ -10,7 +10,9 @@ Measure first, then read the logs, then the code. Do not guess.
 ## 1. The cube
 
 `list_applications` with `repository: "owner/name"`; with several cubes
-and no hint, ask which.
+and no hint, ask which. A cube the line says is paused is not broken:
+`get_organization`'s `plan.suspension` says why and until when; follow the
+`team-and-account` skill instead of the steps below.
 
 ## 2. Metrics
 

@@ -1,6 +1,6 @@
 ---
 name: team-and-account
-description: Use when the user wants to invite teammates, see members or invitations, upgrade or ask for a bigger plan, asks why their cubes are paused, or wants to make or revoke a Cubecen API key for scripts or CI.
+description: Use when the user wants to invite teammates, see members, ask Cubecen for the Launch or Scale plan or more cubes, asks why cubes are paused, wants a Cubecen API key for CI, or wants to delete a cube, project or database.
 ---
 
 # Team and account
@@ -38,8 +38,8 @@ the plan and its use, `plan.suspension`, `links`.
   repository deploys (its apps and frameworks, in one or two sentences),
   show the plan and the workload, and call `request_plan` only after the
   user agrees. Cubecen reviews it and e-mails the result.
-- Refused for a non-owner: tell the user who can, from the refusal's
-  `next:`, and stop.
+- A member without `request_plan`: say only owners can and name them
+  (`list_members` shows their roles); do not call `request_plan`.
 - To take a request back, confirm first, then `withdraw_plan_request`.
 - Not offered by the tools: the plan page (`links.plan`).
 
@@ -56,7 +56,14 @@ the plan and its use, `plan.suspension`, `links`.
   the user first, then `revoke_api_key` (name or ID). Teammates' keys are
   managed on `links.api_keys`.
 
-## 5. Not available here
+## 5. Deleting
+
+Cubes, projects and databases: find it (`list_organizations` when the user
+has several, then `list_applications` or `list_databases` in each), name it
+with its project and organization, and delete only after the user confirms
+that one.
+
+## 6. Not available here
 
 `API_KEY_NOT_ALLOWED` (the agent is signed in with an API key) or "not on
 for this organization yet": give the matching dashboard link from
