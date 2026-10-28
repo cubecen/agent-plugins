@@ -1,53 +1,63 @@
 ---
 name: fix-deploy
-description: Find out why a Cubecen build or deploy failed, or why a live Cubecen app misbehaves, from its logs, and fix it in the code or the cube's settings. Use when a Cubecen release failed, the user asks why their Cubecen deploy broke, or their Cubecen app crashes, errors or is slow.
+description: Use when a Cubecen build or deployment failed (BUILD_FAILED, DEPLOY_FAILED), the user asks why their Cubecen deploy broke, or Cubecen reports BUILD_NOT_DETECTED, START_COMMAND_NOT_FOUND, APP_NOT_LISTENING, APP_CRASHED, APP_OUT_OF_MEMORY or QUOTA_EXCEEDED.
 ---
 
 # Fix a failed Cubecen deploy
 
-A failed release leaves the previous one serving: there is time to find the
-cause instead of guessing.
+A failed release leaves the previous one serving: find the cause, do not
+guess.
 
-## 1. Find the failure
+## 1. Read the diagnosis
 
-- The release: the one `wait_for_release` just reported, or the newest from
-  `list_releases`. `get_release` gives its stage, error code and message,
-  and names the `get_logs` call for the failed stage.
-- Read that log: `get_logs` with `source: "build"` or `"deployment"` and the
-  `id` it named. For a live app that misbehaves, `source: "runtime"`, and
-  `get_metrics` for memory and CPU.
-- Read the app's code where the log points. Explain the cause in one or two
-  sentences before changing anything.
+- The release: the one `wait_for_release` just answered; else
+  `list_applications` with `repository: "owner/name"` names a failed last
+  release, or `list_releases`; then `get_release`.
+- A failed release's answer is its diagnosis, line by line: `cause:`,
+  `fix:`, `seen in the log:` (known failures quoted from the log), the
+  failing log lines, `next:`. Read all of it first.
+- More log when needed: `get_logs` with the `source` and `id` the answer
+  names and `errors: true`; the app's own output: `source: runtime`,
+  `errors: true`, `since: 1h`. Memory or restarts: `get_metrics`.
 
-## 2. Codes
+## 2. Find it in the code
 
-| Code | Cause | Fix |
-|---|---|---|
-| `BUILD_NOT_DETECTED` | No `Dockerfile`, and Railpack found no known app in `app_root` | Fix `app_root` (`get_repository_folders`), or add a `Dockerfile` |
-| `START_COMMAND_NOT_FOUND` | Nothing to run: no `start` script and no start command | Add a `start` script, set `start_command`, or for a static site set `output_directory` |
-| `START_COMMAND_NEEDS_SHELL` | `start_command` set, but the Dockerfile image has no `/bin/sh` | Clear `start_command` (the image's own command runs) or use an image with a shell |
-| `WORKFLOW_EXECUTION_FAILED` | A step failed: compile error, failed install, missing build-time variable | The build log names the step; fix the code, or set the variable with `build: true` |
-| `APP_NOT_LISTENING` | The app ran but did not accept connections on its port | Listen on `0.0.0.0:$PORT`, or set `port` to the app's port |
-| `APP_CRASHED` | The app exited; the message has the exit code | Read the deployment log: often a missing variable, a failed database connection or a wrong start command. SvelteKit with exit 1: use `@sveltejs/adapter-node`. Official `nginx` image: use `nginxinc/nginx-unprivileged` |
-| `APP_OUT_OF_MEMORY` | Over the cube's memory | Fix a leak or a large build-time step in the start command, or a bigger `size` within the plan |
-| `QUOTA_EXCEEDED` | The platform had no room right now; not the app's fault | Deploy again later |
+Open the file and line the log points to. Explain the cause to the user in
+one or two sentences, quoting the log line that shows it.
 
-Static sites and framework needs: see the `prepare-app` skill.
+## 3. Fix it where it is
 
-## 3. Apply the fix
+- **Code** (a compile error, a bad listen call, a missing start script):
+  edit it and show the change. Ask before you commit and push; after the
+  push, `wait_for_release` with `commit`.
+- **Settings** (`app_root`, `port`, `start_command`, `build_command`,
+  `output_directory`, `size`): `update_application`, then `deploy`
+  (settings apply from the next build).
+- **Environment**: `set_env` (`secret: true` for secrets), then
+  `redeploy`. A key the build reads needs `build: true` and `deploy`: a
+  redeploy reuses the old build. A value you do not have comes from the
+  user; never invent one, and ask before copying it from a local `.env`.
+- **Not the app** (`QUOTA_EXCEEDED`, build minutes used up): say so; no
+  code change. Deploy again later, or the plan page the answer links.
 
-- **Code:** change it, show the diff, and ask before you commit and push.
-  A push to the tracked branch starts a release by itself; `list_releases`
-  shows it. Otherwise `deploy`.
-- **Settings** (`port`, `start_command`, `build_command`, `output_directory`,
-  `app_root`, `size`): `update_application`, then `deploy`; they apply from
-  the next build.
-- **Environment:** `set_env`, then `redeploy` (or `deploy` when the key is
-  read by the build).
-- Then `wait_for_release`, and repeat until it is live.
+Then wait for the new release, and repeat if it fails differently.
 
-## Live app problems
+## Codes
 
-- Errors or crashes: `get_logs` `source: "runtime"`, then fix as above.
-- A bad release that is live: `rollback` brings back an earlier one. It is
-  destructive (it changes what is live): confirm with the user first.
+| Code | Usual fix |
+|---|---|
+| `BUILD_NOT_DETECTED` | `app_root` to the app's folder (`get_repository_folders`), or a Dockerfile |
+| `START_COMMAND_NOT_FOUND` | a `start` script, `start_command`, or `output_directory` for a static site |
+| `START_COMMAND_NEEDS_SHELL` | clear `start_command`, or an image with `/bin/sh` |
+| `WORKFLOW_EXECUTION_FAILED` | the failing step's error in the log: code, install or a build-time variable |
+| `APP_NOT_LISTENING` | listen on `0.0.0.0` and `PORT`, or set `port` |
+| `APP_CRASHED` | the log's error: often a missing variable or an unreachable database |
+| `APP_OUT_OF_MEMORY` | the code that fills memory at start or per request; or a bigger size within the plan |
+| `QUOTA_EXCEEDED` | nothing in the app: deploy again later |
+| `ENV_REFERENCE_BROKEN` | `get_env`, then point the named variable at an existing cube or database, or unset it |
+
+## Rules
+
+- Never commit, push or print a secret without the user's yes.
+- Destructive tools (`rollback`, `restore_env`, `delete_*`…): confirm first.
+- A refusal's `next:` line says what to do.
