@@ -42,7 +42,20 @@ two sentences, quoting the log line.
 - Not enough capacity for the work: a bigger size (`configure` skill),
   after the code has been looked at.
 
-## 6. A bad release, back
+## 6. Report
+
+Your last message is the report, in this order:
+
+1. **What is wrong**: the numbers that show it (5xx share, latency,
+   restarts, memory), and since when.
+2. **Cause**: one or two sentences, quoting the log line and naming the
+   file and line.
+3. **Change**: what you changed, or the change you propose when you made
+   none.
+4. **Next**: the commit and push you ask for, the release to wait for, or
+   what the user must decide.
+
+## 7. A bad release, back
 
 When the live release broke it and the user wants the previous version:
 `list_releases`, take the last good release before the live one, tell the

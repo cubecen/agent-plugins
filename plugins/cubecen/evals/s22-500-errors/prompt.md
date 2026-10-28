@@ -5,4 +5,4 @@ allowed_tools: [Read, Glob, Grep, Skill]
 tags: [probe]
 ---
 
-My site on Cubecen is returning 500 errors, check the logs.
+My site on Cubecen is returning 500 errors. Find out why and fix it.

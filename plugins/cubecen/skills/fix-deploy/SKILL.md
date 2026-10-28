@@ -22,8 +22,7 @@ guess.
 
 ## 2. Find it in the code
 
-Open the file and line the log points to. Explain the cause to the user in
-one or two sentences, quoting the log line that shows it.
+Open the file and line the log points to.
 
 ## 3. Fix it where it is
 
@@ -41,6 +40,16 @@ one or two sentences, quoting the log line that shows it.
   code change. Deploy again later, or the plan page the answer links.
 
 Then wait for the new release, and repeat if it fails differently.
+
+## 4. Report
+
+Your last message is the report, in this order:
+
+1. **Cause**: one or two sentences, quoting the log line that shows it.
+2. **Change**: what you changed (file and line, setting or variable), or
+   the change you propose when you made none.
+3. **Next**: the commit and push you ask for, the release to wait for,
+   or what the user must do.
 
 ## Codes
 
@@ -60,4 +69,3 @@ Then wait for the new release, and repeat if it fails differently.
 
 - Never commit, push or print a secret without the user's yes.
 - Destructive tools (`rollback`, `restore_env`, `delete_*`…): confirm first.
-- A refusal's `next:` line says what to do.
