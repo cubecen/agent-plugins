@@ -34,7 +34,7 @@ in the line) and a paused cube.
 
 ## Rules
 
-- A bigger plan, more cubes, previews or databases: the plan page; owners
-  ask for Launch or Scale there.
+- A bigger plan, more cubes, previews or databases, teammates or API keys:
+  the `team-and-account` skill (owners ask for Launch or Scale through it).
 - No Cubecen tools listed: the MCP server is not signed in; ask the user to
   sign in (Claude Code: `/mcp`; Codex: `/plugins`).

@@ -13,5 +13,5 @@ is the longer list.
 | `APP_CRASHED` | the log's error: often a missing variable or an unreachable database |
 | `APP_OUT_OF_MEMORY` | the code that fills memory at start or per request; or a bigger size within the plan |
 | `QUOTA_EXCEEDED` | nothing in the app: deploy again later |
-| `PLAN_LIMIT_REACHED` (build minutes) | they come back on `get_organization`'s `usage.to`; `redeploy` (no build) works meanwhile; or a bigger plan |
+| `PLAN_LIMIT_REACHED` (build minutes) | they come back on `get_organization`'s `usage.to`; `redeploy` (no build) works meanwhile; or a bigger plan (`request_plan`, owners) |
 | `ENV_REFERENCE_BROKEN` | `get_env`, then point the named variable at an existing cube or database, or unset it |

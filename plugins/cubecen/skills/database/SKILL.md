@@ -12,7 +12,8 @@ password.
 ## 1. The plan
 
 `get_organization`: Free has no databases; Launch and Scale do (their
-count is in the plan's limits). Without one, give the plan page link.
+count is in the plan's limits). Without one, a bigger plan, which an owner
+asks for (`team-and-account` skill), or the plan page link.
 
 ## 2. The database
 

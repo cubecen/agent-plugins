@@ -41,7 +41,8 @@ Open the file and line the log points to.
 - **Not the app**: say so; no code change. `QUOTA_EXCEEDED`: deploy again
   later. The plan's build minutes used up (`PLAN_LIMIT_REACHED`, or
   `Over its limits: build_minutes`): they come back on `get_organization`'s
-  `usage.to`; `redeploy` (no build) works meanwhile; or a bigger plan.
+  `usage.to`; `redeploy` (no build) works meanwhile; or a bigger plan, which
+  an owner asks for (`team-and-account` skill).
 
 The codes and their usual fixes: `references/codes.md`.
 

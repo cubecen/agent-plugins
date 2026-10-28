@@ -40,8 +40,9 @@ first. A preview's logs: `get_logs` with `source: preview`.
 
 `get_organization` lists the plan's sizes. `update_application` with
 `size` up to the plan's largest; it applies at once. Above
-it, the answer is `PLAN_LIMIT_REACHED` with the plan page; a size not
-offered right now is `SIZE_UNAVAILABLE`. Look at the code before buying
+it, the answer is `PLAN_LIMIT_REACHED`: a bigger plan, which an owner asks
+for (`team-and-account` skill); a size not offered right now is
+`SIZE_UNAVAILABLE`. Look at the code before buying
 memory (`investigate` skill).
 
 ## Rules

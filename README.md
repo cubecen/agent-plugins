@@ -11,6 +11,7 @@ The plugin connects your agent to the Cubecen MCP server
 | Skill | What it does |
 |---|---|
 | `getting-started` | Your organization, role, plan and limits; connects GitHub when needed; your first deploy; how much of the plan you used |
+| `team-and-account` | Invites teammates as members or viewers, asks Cubecen for a bigger plan, explains paused cubes, makes and revokes your API keys for CI without printing them; each after your yes |
 | `deploy` | Deploys the current repository and gives back its live URL: finds the GitHub repository, the app's folder and its cube, asks before it commits or pushes, waits for the pushed commit's release; several apps in one repository |
 | `prepare-app` | Checks the app will build and run on Cubecen (port, start command, framework settings, Dockerfile) and fixes what would fail |
 | `fix-deploy` | Reads a failed build's or deployment's diagnosis and logs, explains the cause and fixes it in the code, the cube's settings or its environment |
