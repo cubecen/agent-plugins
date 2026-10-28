@@ -2,35 +2,34 @@
 
 The key acts as the person who made it, in one organization: `read` keys
 read, `full` keys also deploy and change cubes. It stops working at its
-expiry or when revoked.
+expiry or when revoked. Its value is in the conversation already; keep it out
+of everything else: replies, files under git, URLs, issues, comments.
+
+## Check the destination first
+
+- GitHub Actions: `gh auth status` succeeds and the repository is on
+  GitHub. Otherwise the user stores it through the repository's Settings →
+  Secrets and variables → Actions, so make no key here: send them to the
+  dashboard's API keys page to make one and paste it there themselves.
+- A local `.env`: `git check-ignore -q .env` succeeds and
+  `git ls-files --error-unmatch .env` fails (ignored and not tracked).
 
 ## GitHub Actions
 
-Store it as a repository secret named as the workflow reads it (often
-`CUBECEN_API_KEY`). With the GitHub CLI, from the repository's directory,
-the value goes in on stdin, never as an argument:
+Write the value with the Write tool to a file outside the repository, read
+it from there, and delete it, so the value is in no command line:
 
 ```sh
-gh secret set CUBECEN_API_KEY <<'EOF_KEY'
-<the value>
-EOF_KEY
+gh secret set CUBECEN_API_KEY < "$file" && rm -f "$file"
 ```
 
-When you cannot run it (no `gh`, or it is not signed in), tell the user to
-open the repository's Settings → Secrets and variables → Actions → New
-repository secret, and to paste the value they keep from this conversation,
-or make a new key there themselves in the dashboard (`links.api_keys`).
-
-The workflow then sends `Authorization: Bearer ${{ secrets.CUBECEN_API_KEY }}`.
+Name the secret as the workflow reads it (often `CUBECEN_API_KEY`); the
+workflow sends `Authorization: Bearer ${{ secrets.CUBECEN_API_KEY }}`.
 
 ## GitLab CI
 
-A CI/CD variable, masked and protected: Settings → CI/CD → Variables.
-
-## A local script
-
-An `.env` file that git ignores: check `.gitignore` lists it before
-writing; never commit it.
+A masked CI/CD variable, set by the user in Settings → CI/CD → Variables
+(a protected variable reaches protected branches only).
 
 ## Rotating
 
