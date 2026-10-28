@@ -28,8 +28,9 @@ never in a key the browser reads; previews never get them.
 
 ## 4. Migrations
 
-Find the app's migration tool in the repository (`prisma/`,
-`drizzle.config.*`, `alembic.ini`, `db/migrate/`, `migrations/`), then read
+Find the app's migration tool: `package.json` dependencies (`prisma`,
+`drizzle-kit`, `knex`, …) or files such as `prisma/schema.prisma`,
+`drizzle.config.*`, `alembic.ini`, `db/migrate/*`, `migrations/*`. Then read
 `references/migrations.md` for it. Prefer running them
 when the cube starts (in its start command or start script), so every
 deploy migrates. A one-off run from this machine only with the user's yes.
