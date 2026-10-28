@@ -25,9 +25,7 @@ same project:
 - `PUBLIC_URL` is `https://<host>.cubecen.app`; it never changes, so a
   cube may refer to one not deployed yet. `PUBLIC_HOST` is the host alone.
 - `PRIVATE_URL` is plain HTTP on port 80 inside the cluster: for
-  server-to-server calls only, never in a key the browser reads. It works
-  once both cubes deployed with the private network on; before, `set_env`
-  refuses it.
+  server-to-server calls only, never in a key the browser reads.
 - A slug that another cube's env uses cannot be renamed; a deleted cube's
   references fail the next deploy with `ENV_REFERENCE_BROKEN`.
 

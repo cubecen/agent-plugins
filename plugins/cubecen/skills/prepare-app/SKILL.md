@@ -50,3 +50,7 @@ with their agreement; settings are not code changes.
 - SvelteKit with `adapter-auto`: builds, then crashes at start.
 - The official `nginx` image: does not run; use
   `nginxinc/nginx-unprivileged`.
+
+## Rules
+
+- Never commit or push without the user's yes.

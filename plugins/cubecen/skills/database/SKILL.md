@@ -38,11 +38,12 @@ deploy migrates. A one-off run from this machine only with the user's yes.
 ## 5. Deploy
 
 `get_database` until it is `ready` (about a minute); a deploy before that
-answers `DATABASE_NOT_READY`: wait and call again. Then `redeploy` the
-cube (`deploy` when the build reads the database), and `wait_for_release`.
+answers `DATABASE_NOT_READY`: wait and call again. Then `deploy` the cube
+(it reuses the build when only variables changed) and `wait_for_release`.
 
 ## Rules
 
+- Never commit or push without the user's yes.
 - Never print a password or a connection string; never paste them in a
   command the user sees. `get_database_connection` answers both: use it
   only for a run the user agreed to.

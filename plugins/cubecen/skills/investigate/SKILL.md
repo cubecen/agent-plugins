@@ -59,7 +59,9 @@ Your last message is the report, in this order:
 
 When the live release broke it and the user wants the previous version:
 `list_releases`, take the last good release before the live one, tell the
-user which (when, commit, who) and ask to confirm. Only then `rollback`,
+user which (when, commit, who), that it brings back the variables that
+release shipped with (old secret values too), and ask to confirm. Only
+then `rollback`,
 and `wait_for_release`. The broken commit stays on the branch: fix forward
 afterwards.
 

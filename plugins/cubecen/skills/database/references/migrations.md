@@ -22,8 +22,11 @@ tool needs a direct connection.
 Only when the user asks for it (a seed, a data fix):
 
 1. Say what will run, against which database, and wait for a yes.
-2. `get_database_connection` answers `database_url_unpooled`; pass it in
-   the command's environment without echoing it, for example
-   `DATABASE_URL="$URL" npx prisma db seed` with `URL` set from the
-   answer in the same command.
-3. Never print the URL or the password in the conversation.
+2. By default the user runs it: give them the command, with the
+   connection string from the database's page in the dashboard.
+3. When they want you to run it: `get_database_connection` answers
+   `database_url_unpooled`. Write `DATABASE_URL=<that URL>` with the file
+   tool to a new file outside the repository (in the system's temp
+   directory), run `set -a; . <file>; set +a; <command>` so the URL is in
+   no command line, then delete the file.
+4. Never print the URL or the password in the conversation.

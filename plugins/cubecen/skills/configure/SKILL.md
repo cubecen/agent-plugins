@@ -15,8 +15,8 @@ description: Use when the user wants to set, change or remove environment variab
 - Keys the build reads (`VITE_`, `NEXT_PUBLIC_`, `PUBLIC_`, `REACT_APP_`,
   `NUXT_PUBLIC_`, `EXPO_PUBLIC_`, `GATSBY_`…) need `build: true`; they end
   up in the browser bundle, so never a secret.
-- Changes apply with `redeploy`; a `build: true` key needs `deploy` (a new
-  build).
+- Changes apply with `redeploy` (the serving build again). After a failed
+  release, or for a `build: true` key, `deploy` instead.
 - References: `${{ <cube>.PUBLIC_URL }}`, `${{ <cube>.PRIVATE_URL }}` and
   `${{ <database>.DATABASE_URL }}` in a variable's value, between cubes and
   databases of one project; a broken one fails the next deploy with
@@ -39,13 +39,13 @@ first. A preview's logs: `get_logs` with `source: preview`.
 ## Size and memory
 
 `get_organization` lists the plan's sizes. `update_application` with
-`size` up to the plan's largest; it applies with the next deploy. Above
+`size` up to the plan's largest; it applies at once. Above
 it, the answer is `PLAN_LIMIT_REACHED` with the plan page; a size not
 offered right now is `SIZE_UNAVAILABLE`. Look at the code before buying
 memory (`investigate` skill).
 
 ## Rules
 
-- Destructive tools (`restore_env`, `set_previews`, `rollback`…): confirm
-  with the user first.
+- Destructive tools (`restore_env`, `set_previews`, `rollback`,
+  `cancel_release`…): confirm with the user first.
 - A refusal's `next:` line says what to do.

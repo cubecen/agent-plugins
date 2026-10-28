@@ -11,19 +11,23 @@ deploys.
 ## 1. The repository
 
 - `git remote get-url origin` gives `owner/name` (GitHub only). With no
-  GitHub remote, Cubecen cannot build it yet: ask whether to create a GitHub
-  repository and push; do neither without a yes.
+  GitHub remote, Cubecen cannot build it yet: ask whether to create a
+  private GitHub repository and push (`gh repo create <name> --private
+  --source=. --push`); public only if the user says so. A private
+  repository needs `connect_github` once.
 - The app's folder from the repository root is `app_root`
-  (`git rev-parse --show-prefix`). More than one app in the repository:
+  (`git rev-parse --show-prefix`). Several apps in the repository:
   read `references/multi-service.md` first.
-- The branch: `git branch --show-current`.
+- The branch: `git branch --show-current`. Not the repository's default
+  branch: ask whether the cube tracks it (`deploy_branch`) or deploys it
+  once (`revision`).
 - `git` fails? Read `.git/config` (origin's `url`), `.git/HEAD` (the
   branch) and `.git/refs/heads/<branch>` or `.git/packed-refs` (the commit).
 
 ## 2. What GitHub has
 
 `git status --porcelain` and `git log @{u}..` show work that is not pushed.
-When the user wants it live, show it and ask before you commit and push.
+To make it live, show it and ask before you commit and push.
 
 ## 3. Create or deploy
 
@@ -32,13 +36,13 @@ When the user wants it live, show it and ask before you commit and push.
 2. **A cube exists.** A push to the branch it tracks starts its release:
    `wait_for_release` with `commit` (the pushed SHA). A cube made from a
    public repository's link never deploys on push: call `deploy`.
-3. **No cube: a first deploy.** **REQUIRED SUB-SKILL:** load
-   `prepare-app` now, before `create_application`. Apps that run locally
-   often fail on Cubecen (localhost or a fixed port, a Dockerfile that needs
-   root), and its checks catch them. Then `create_application` with
+3. **No cube: a first deploy.** **REQUIRED SUB-SKILL** when the app's code
+   is here: load `prepare-app` before `create_application`; its checks
+   catch what fails here though it runs locally (localhost, a fixed port, a
+   root-only image). Then `create_application` with
    `repository: "owner/name"` and `app_root`, plus what they found (`port`,
    `start_command`, `build_command`, `output_directory`). It deploys and
-   names the release to wait for. When the app needs variables or a
+   names the release. When the app needs variables or a
    database before it can start, pass `deploy: false`, do section 4, then
    `deploy`.
 4. **`REPOSITORY_NOT_ACCESSIBLE`**: the repository is private and no GitHub
@@ -52,13 +56,13 @@ When the user wants it live, show it and ask before you commit and push.
   `os.environ`, `os.Getenv`): `set_env`, with `secret: true` for passwords,
   tokens and keys. A local `.env` holds secrets: ask before copying from
   it, and never print a value.
-- Keys the build reads (`VITE_`, `NEXT_PUBLIC_`, `PUBLIC_`, `REACT_APP_`,
-  `NUXT_PUBLIC_`, `EXPO_PUBLIC_`, `GATSBY_`, or any the build step reads):
+- Keys the build reads (`VITE_`, `NEXT_PUBLIC_`, `REACT_APP_`, … or any
+  the build step reads):
   `build: true`. Public prefixes end up in the browser bundle: never a
   secret there.
 - A database: follow the `database` skill.
-- Env changes apply with the next `redeploy`, or `deploy` for `build: true`
-  keys.
+- Env changes apply with the next `deploy` (it reuses the build when only
+  runtime variables changed).
 
 ## 5. Wait and report
 
@@ -69,9 +73,7 @@ follow the `fix-deploy` skill.
 ## Rules
 
 - Never commit, push or create a GitHub repository without the user's yes.
-- A refusal's `next:` line says what to do; links in answers open the
-  dashboard.
-- Destructive tools (`delete_*`, `remove_*`, `rollback`, `restore_env`,
-  `set_previews`, `reset_database_password`): confirm with the user first.
+- Destructive tools (`delete_*`, `remove_*`, `rollback`, `cancel_release`,
+  `restore_env`, `set_previews`, `reset_database_password`): confirm first.
 - No Cubecen tools listed: the MCP server is not signed in; ask the user to
   sign in (Claude Code: `/mcp`; Codex: `/plugins`).
