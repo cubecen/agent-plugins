@@ -1,13 +1,14 @@
 #!/bin/sh
 # Checks the plugin before a commit: the manifests, the structure of the
-# skills and eval cases, and the push hook.
+# skills and eval cases, and the push hook. Exits non-zero on the first
+# failure.
 set -e
 cd "$(dirname "$0")/.."
-claude plugin validate plugins/cubecen | tail -1
-claude plugin validate . | tail -1
+validate() { # validate <path>: prints the verdict; all of the output when it fails
+  out=$(claude plugin validate "$1" 2>&1) || { printf '%s\n' "$out"; exit 1; }
+  printf '%s\n' "$out" | tail -n 1
+}
+validate plugins/cubecen
+validate .
 python3 -I tests/check_repo.py
-if [ -f tests/after-push.test.sh ]; then
-  sh tests/after-push.test.sh
-else
-  echo "after-push tests: not written yet"
-fi
+sh tests/after-push.test.sh

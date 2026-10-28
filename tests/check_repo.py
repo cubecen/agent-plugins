@@ -8,6 +8,15 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP = {".git", ".superpowers", "results", "node_modules"}
+WORDS = 500
+# Every case's push guard: a git push or gh repo create in the Bash command
+# (not its description), after a separator, a space or an escaped line break.
+PUSH_GUARD = (r'"command"\s*:\s*"(?:[^"\\]|\\.)*?(?:(?<![\w-])|(?<=\\[nrt]))'
+              r'(?:git(?:\s+(?:-C|-c)\s+\S+|\s+--[\w-]+(?:=\S+)?)*\s+push\b|gh\s+repo\s+create\b)')
+PUSHES = ["git push", "git add -A\ngit commit -m x\ngit push", "cd app\ngh repo create acme/shop --private",
+          "git --no-pager push origin main", "git -c k=v push", "git -C web push", "git add . && git push origin main",
+          "(git push)", "/usr/bin/git push"]
+NOT_PUSHES = ["git status", "git pushx", "legit push", "cat .git/config", "git log --oneline"]
 problems = []
 
 
@@ -64,6 +73,9 @@ for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
         description = fields.get("description", "")
         if not description or len(description) >= 300:
             problems.append(f"{rel(path)}: description missing or {len(description)} characters (under 300)")
+        words = len(body.split())
+        if words >= WORDS:
+            problems.append(f"{rel(path)}: {words} words (under {WORDS})")
         for ref in sorted(set(re.findall(r"references/[\w.-]+\.md", body))):
             if not os.path.isfile(os.path.join(skills, skill, ref)):
                 problems.append(f"{rel(path)}: names {ref}, which does not exist")
@@ -104,6 +116,18 @@ for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
         graders = os.path.join(path, "graders")
         if not (os.path.isdir(graders) and any(n.endswith(".md") for n in os.listdir(graders))):
             problems.append(f"{rel(path)}: no grader")
+        for name in sorted(os.listdir(graders)) if os.path.isdir(graders) else []:
+            if name.endswith(".md"):
+                arm = (frontmatter(os.path.join(graders, name))[0] or {}).get("arm")
+                if arm not in (None, "both", "with-only"):
+                    problems.append(f"{rel(os.path.join(graders, name))}: arm {arm!r} (both or with-only)")
+        guard = os.path.join(graders, "no-push.md")
+        if not os.path.isfile(guard):
+            problems.append(f"{rel(path)}: no push guard (graders/no-push.md)")
+        else:
+            fields, _ = frontmatter(guard)
+            if (fields or {}).get("input_match") != "'" + PUSH_GUARD + "'" or (fields or {}).get("max") != "0":
+                problems.append(f"{rel(guard)}: not the push guard (PUSH_GUARD, max: 0)")
         if os.path.isfile(case_yaml):
             with open(case_yaml, encoding="utf-8") as f:
                 m = re.search(r"scaffold_script:\s*(\S+)", f.read())
@@ -111,6 +135,27 @@ for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
                 script = os.path.join(path, m.group(1))
                 if not os.path.isfile(script) or not os.access(script, os.X_OK):
                     problems.append(f"{rel(path)}: scaffold {m.group(1)} missing or not executable")
+
+# The push guard catches each push and nothing else, as the eval reads a
+# tool input: its JSON.
+guard = re.compile(PUSH_GUARD)
+for command in PUSHES:
+    if not guard.search(json.dumps({"command": command, "description": "x"})):
+        problems.append(f"PUSH_GUARD misses {command!r}")
+for command in NOT_PUSHES:
+    if guard.search(json.dumps({"command": command, "description": "Check git push state"})):
+        problems.append(f"PUSH_GUARD matches {command!r}")
+
+# One version in both manifests.
+versions = {}
+for manifest in (".claude-plugin/plugin.json", ".codex-plugin/plugin.json"):
+    for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
+        path = os.path.join(ROOT, "plugins", plugin, manifest)
+        if os.path.isfile(path):
+            with open(path, encoding="utf-8") as f:
+                versions[rel(path)] = json.load(f).get("version")
+if len(set(versions.values())) > 1:
+    problems.append(f"manifest versions differ: {versions}")
 
 for p in problems:
     print("FAIL", p)
