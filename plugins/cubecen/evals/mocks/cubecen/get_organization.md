@@ -7,13 +7,20 @@ Organization acme (you are an owner) is on the Launch plan (cubes up to large); 
   "can": [
     "create_cubes",
     "deploy",
-    "delete_cubes"
+    "delete_cubes",
+    "invite",
+    "request_plan",
+    "api_keys"
   ],
   "links": {
     "plan": "https://app.cubecen.com/o/acme/settings/billing?from=mcp",
     "members": "https://app.cubecen.com/o/acme/members?from=mcp",
+    "invitations": "https://app.cubecen.com/o/acme/members?tab=invitations&from=mcp",
+    "invite_form": "https://app.cubecen.com/o/acme/members?tab=invitations&invite=1&from=mcp",
+    "api_keys": "https://app.cubecen.com/o/acme/settings/api-keys?from=mcp",
     "usage": "https://app.cubecen.com/o/acme/usage?from=mcp",
-    "integrations": "https://app.cubecen.com/o/acme/integrations?from=mcp"
+    "integrations": "https://app.cubecen.com/o/acme/integrations?from=mcp",
+    "settings": "https://app.cubecen.com/o/acme/settings?from=mcp"
   },
   "plan": {
     "plan": {

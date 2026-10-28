@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: s35-invite-teammates
+context:
+  scaffold_script: scaffold.sh

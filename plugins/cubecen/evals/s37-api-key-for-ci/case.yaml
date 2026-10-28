@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: s37-api-key-for-ci
+context:
+  scaffold_script: scaffold.sh
