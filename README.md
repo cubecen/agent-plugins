@@ -75,7 +75,12 @@ see [cubecen.com/docs](https://cubecen.com/docs).
     --model sonnet --judge-model sonnet --no-publish
   ```
 
-  Add `--tag probe --runs 1` for a quick, cheap check of two cases.
+  Add `--tag probe --runs 1` for a quick, cheap check of two cases, or
+  `-j 4` to run four at once.
+- On macOS with only the Command Line Tools, `git` does not run inside the
+  eval's sandbox (`/usr/bin/git` is the `xcrun` shim, which the sandbox
+  breaks). The cases then exercise the skills' fallback, which reads `.git/`
+  directly.
 
 ## License
 
