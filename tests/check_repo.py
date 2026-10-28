@@ -92,9 +92,14 @@ for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
         words = len(body.split())
         if words >= WORDS:
             problems.append(f"{rel(path)}: {words} words (under {WORDS})")
-        named = sorted(t for t in destructive if re.search(r"\b" + t + r"\b", body))
+        text = body
+        refs = os.path.join(skills, skill, "references")
+        for name in sorted(os.listdir(refs)) if os.path.isdir(refs) else []:
+            with open(os.path.join(refs, name), encoding="utf-8") as f:
+                text += "\n" + f.read()
+        named = sorted(t for t in destructive if re.search(r"\b" + t + r"\b", text))
         if named and "confirm" not in body.lower():
-            problems.append(f"{rel(path)}: names {', '.join(named)} (destructive) but never says to confirm")
+            problems.append(f"{rel(path)}: names {', '.join(named)} (destructive, in it or its references) but never says to confirm")
         for ref in sorted(set(re.findall(r"references/[\w.-]+\.md", body))):
             if not os.path.isfile(os.path.join(skills, skill, ref)):
                 problems.append(f"{rel(path)}: names {ref}, which does not exist")
