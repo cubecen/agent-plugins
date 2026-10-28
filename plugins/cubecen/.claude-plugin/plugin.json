@@ -1,6 +1,6 @@
 {
   "name": "cubecen",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Deploy the app you are working on to Cubecen, fix failed deploys and live errors from the diagnosis, logs and metrics, and wire databases and domains.",
   "author": {
     "name": "Cubecen",

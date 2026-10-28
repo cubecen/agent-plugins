@@ -55,9 +55,25 @@ for path in walk(ROOT):
         except ValueError as e:
             problems.append(f"{rel(path)}: invalid JSON: {e}")
 
+def destructive_tools(base):
+    """The tools the server marks destructive (destructiveHint), from the
+    eval mocks' copy of its tools/list."""
+    path = os.path.join(base, "evals", "mocks", "cubecen", "_tools.json")
+    if not os.path.isfile(path):
+        return set()
+    with open(path, encoding="utf-8") as f:
+        tools = {t["name"] for t in json.load(f)["tools"] if (t.get("annotations") or {}).get("destructiveHint")}
+    # set_env is marked destructive (it can drop a value), but its values come
+    # from the user and the client asks before the call: the skills' rule
+    # lists the tools that delete or roll back.
+    return tools - {"set_env"}
+
+
 for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
     base = os.path.join(ROOT, "plugins", plugin)
-    # Skills: name is the directory, a short description, references exist.
+    destructive = destructive_tools(base)
+    # Skills: name is the directory, a short description, references exist; a
+    # skill that names a destructive tool tells the agent to confirm first.
     skills = os.path.join(base, "skills")
     for skill in sorted(os.listdir(skills)) if os.path.isdir(skills) else []:
         path = os.path.join(skills, skill, "SKILL.md")
@@ -76,6 +92,9 @@ for plugin in sorted(os.listdir(os.path.join(ROOT, "plugins"))):
         words = len(body.split())
         if words >= WORDS:
             problems.append(f"{rel(path)}: {words} words (under {WORDS})")
+        named = sorted(t for t in destructive if re.search(r"\b" + t + r"\b", body))
+        if named and "confirm" not in body.lower():
+            problems.append(f"{rel(path)}: names {', '.join(named)} (destructive) but never says to confirm")
         for ref in sorted(set(re.findall(r"references/[\w.-]+\.md", body))):
             if not os.path.isfile(os.path.join(skills, skill, ref)):
                 problems.append(f"{rel(path)}: names {ref}, which does not exist")

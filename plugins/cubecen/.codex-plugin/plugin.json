@@ -1,6 +1,6 @@
 {
   "name": "cubecen",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Deploy the app you are working on to Cubecen, fix failed deploys and live errors from the diagnosis, logs and metrics, and wire databases and domains.",
   "author": {
     "name": "Cubecen",
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Cubecen",
     "shortDescription": "Deploy your app from GitHub and get a live URL",
-    "longDescription": "Deploy the repository you are working on to Cubecen and get a live URL. The agent checks the app is ready (port, start command, framework settings), creates the cube and waits for the release. When a deploy fails or the live app errors, it reads the release's diagnosis, the logs and the metrics, fixes the cause and waits again. It also sets variables and secrets, wires a managed Postgres database, connects a domain, turns on pull request previews and shows your plan's usage.",
+    "longDescription": "Deploy the repository you are working on to Cubecen and get a live URL. The agent checks the app is ready (port, start command, framework settings), creates the cube and waits for the release. When a deploy fails or the live app errors, it reads the release's diagnosis, the logs and the metrics, fixes the cause and waits again. It also sets variables and secrets, wires a managed Postgres database, connects a domain, turns on pull request previews and shows your plan's usage. With your yes it invites teammates as members or viewers, asks for a bigger plan, and makes or revokes your API keys for CI without printing them.",
     "developerName": "Cubecen",
     "category": "Coding",
     "capabilities": [
