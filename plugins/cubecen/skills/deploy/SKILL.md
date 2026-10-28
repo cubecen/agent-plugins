@@ -32,8 +32,10 @@ When the user wants it live, show it and ask before you commit and push.
 2. **A cube exists.** A push to the branch it tracks starts its release:
    `wait_for_release` with `commit` (the pushed SHA). A cube made from a
    public repository's link never deploys on push: call `deploy`.
-3. **No cube: a first deploy.** First load the `prepare-app` skill and do
-   its checks (start, port, Dockerfile). Then `create_application` with
+3. **No cube: a first deploy.** **REQUIRED SUB-SKILL:** load
+   `prepare-app` now, before `create_application`. Apps that run locally
+   often fail on Cubecen (localhost or a fixed port, a Dockerfile that needs
+   root), and its checks catch them. Then `create_application` with
    `repository: "owner/name"` and `app_root`, plus what they found (`port`,
    `start_command`, `build_command`, `output_directory`). It deploys and
    names the release to wait for. When the app needs variables or a
