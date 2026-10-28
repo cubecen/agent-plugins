@@ -1,7 +1,7 @@
 3 cubes
 shop/web: active, https://shop-acme.cubecen.app, last release DEPLOYED 2 h ago (push by dev)
 shop/api: active, https://api-acme.cubecen.app, last release DEPLOY_FAILED 20 min ago (push by dev): get_release with bld_14
-shop/old: active, https://old-acme.cubecen.app, paused (bandwidth_limit), last release DEPLOYED 9 d ago (dashboard)
+shop/old: active, https://old-acme.cubecen.app, paused (admin), last release DEPLOYED 9 d ago (dashboard)
 
 {
   "items": [
@@ -50,6 +50,9 @@ shop/old: active, https://old-acme.cubecen.app, paused (bandwidth_limit), last r
       "slug": "old",
       "name": "old",
       "state": "active",
+      "suspension": {
+        "reason": "admin"
+      },
       "project": {
         "slug": "shop"
       },

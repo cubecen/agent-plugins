@@ -1,5 +1,6 @@
 ---
 type: regex
 target: last_message
-pattern: '(?i)fail'
+pattern: 'fail'
+flags: i
 ---
