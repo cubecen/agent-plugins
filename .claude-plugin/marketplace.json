@@ -9,7 +9,7 @@
     {
       "name": "cubecen",
       "source": "./plugins/cubecen",
-      "description": "Deploy the app you are working on to Cubecen, wire a Postgres database, and fix failed deploys from the logs.",
+      "description": "Deploy the app you are working on to Cubecen, fix failed deploys and live errors from the diagnosis, logs and metrics, and wire databases and domains.",
       "category": "deployment"
     }
   ]

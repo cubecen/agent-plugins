@@ -1,0 +1,1694 @@
+{
+  "tools": [
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Add a custom domain to a cube. The answer lists the DNS records to create.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "hostname": {
+            "description": "the custom domain, such as www.example.com",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "hostname"
+        ],
+        "type": "object"
+      },
+      "name": "add_domain",
+      "title": "Add a custom domain"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Cancel a build or deployment in progress.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "release": {
+            "description": "the release's ID: a build (bld_...) or a deployment (dpl_...)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "release"
+        ],
+        "type": "object"
+      },
+      "name": "cancel_release",
+      "title": "Cancel a release"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Check a custom domain's DNS now, and start a failed one over.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "domain": {
+            "description": "the domain's hostname or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "domain"
+        ],
+        "type": "object"
+      },
+      "name": "check_domain",
+      "title": "Check a custom domain"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get the link the user opens to connect GitHub to the organization, or to give an existing connection more repositories; also lists the current connections. Needed for private repositories.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "connect_github",
+      "title": "Connect GitHub"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Create a cube (application) from a GitHub repository (owner/name or a link) and deploy it. Only repository is needed: the project, the name and the GitHub connection are found. The answer names the release to follow with wait_for_release.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "app_root": {
+            "description": "the directory the app is in, for a monorepo",
+            "type": "string"
+          },
+          "build_command": {
+            "type": "string"
+          },
+          "deploy": {
+            "description": "build and deploy once created (default true)",
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "deploy_branch": {
+            "description": "the branch to track (default the repository's default branch)",
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "installation_id": {
+            "description": "rarely needed: a GitHub connection's ID (installation_id in list_github_repositories), to pick one when several cover the repository",
+            "type": "string"
+          },
+          "name": {
+            "description": "the cube's name (default the repository's name)",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "output_directory": {
+            "description": "the directory a static site's build writes",
+            "type": "string"
+          },
+          "owner": {
+            "description": "the repository's owner, when repository is only its name",
+            "type": "string"
+          },
+          "port": {
+            "description": "the port the app listens on (default 8080)",
+            "type": [
+              "null",
+              "integer"
+            ]
+          },
+          "project": {
+            "description": "the project's slug or ID (default the organization's default project)",
+            "type": "string"
+          },
+          "push_to_deploy": {
+            "description": "deploy every push to the deploy branch (default true; public repositories cannot)",
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "repository": {
+            "description": "the GitHub repository: owner/name or a link (https://github.com/owner/name, or a /tree/\u003cbranch\u003e[/\u003cfolder\u003e] link). The organization's GitHub connection is used when it covers the repository, else the public repository",
+            "type": "string"
+          },
+          "repository_url": {
+            "description": "the same as repository, kept for older agents",
+            "type": "string"
+          },
+          "revision": {
+            "description": "with deploy: the branch, tag or commit to deploy",
+            "type": "string"
+          },
+          "size": {
+            "description": "the cube's size, up to the plan's (default small)",
+            "type": "string"
+          },
+          "slug": {
+            "description": "the URL name; derived from the name when omitted",
+            "type": "string"
+          },
+          "start_command": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "create_application",
+      "title": "Create a cube"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Create a managed Postgres database in a project. A cube of the project uses it through an env reference: set_env DATABASE_URL = ${{ \u003cslug\u003e.DATABASE_URL }}, then deploy. No password needs to be handled.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID (default the organization's default project); its cubes can use the database",
+            "type": "string"
+          },
+          "slug": {
+            "description": "the name env references use (${{ \u003cslug\u003e.DATABASE_URL }}); derived from the name when omitted",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "name": "create_database",
+      "title": "Create a database"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Create a project in an organization.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "slug": {
+            "description": "the URL name; derived from the name when omitted",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "name": "create_project",
+      "title": "Create a project"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Delete a cube: it stops serving and its URL goes away; its releases, env and custom domains are gone. Ask the user to confirm first, naming the cube.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "delete_application",
+      "title": "Delete a cube"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Delete a database and all its data. Refused while a cube's env refers to it. Ask the user to confirm first, naming the database.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "database": {
+            "description": "the database's slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a database with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "database"
+        ],
+        "type": "object"
+      },
+      "name": "delete_database",
+      "title": "Delete a database"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Delete a project and every cube in it: they stop serving and are torn down. Ask the user to confirm first, listing the project's cubes (list_applications with project).",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID",
+            "type": "string"
+          }
+        },
+        "required": [
+          "project"
+        ],
+        "type": "object"
+      },
+      "name": "delete_project",
+      "title": "Delete a project"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Build and deploy a revision. The answer names the release to wait for with wait_for_release.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "reuse": {
+            "description": "redeploy an earlier build of the same commit when its settings and build-time variables are unchanged (default true)",
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "revision": {
+            "description": "the branch, tag or commit to deploy (default the tracked branch)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "deploy",
+      "title": "Deploy"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Compare a version of a cube's environment variables with the current one (or with from): the keys that to adds, changes and removes. Secret values are never shown.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "from": {
+            "description": "the version to compare from (default the current one)",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "to": {
+            "description": "the version to compare with, from list_env_versions (e.g. the one restore_env would bring back)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "to"
+        ],
+        "type": "object"
+      },
+      "name": "diff_env",
+      "title": "Compare env versions"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get one cube (application): its settings, URL, live deployment and last release.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "get_application",
+      "title": "Get a cube"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get one managed Postgres database: status, limits, usage, the cubes that use it.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "database": {
+            "description": "the database's slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a database with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "database"
+        ],
+        "type": "object"
+      },
+      "name": "get_database",
+      "title": "Get a database"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get a database's host, user, password and connection URLs, for tools outside Cubecen (a local migration, a SQL client). Cubes do not need it: use env references. Do not show the password unless the user asks.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "database": {
+            "description": "the database's slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a database with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "database"
+        ],
+        "type": "object"
+      },
+      "name": "get_database_connection",
+      "title": "Get a database's connection"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get a cube's environment variables. Secrets are listed without their values.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "get_env",
+      "title": "Get environment variables"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get a build's, a deployment's or a cube's runtime log lines, with their time, pod and Kubernetes events. Filter with errors (error lines and Warning events with 2 lines of context) or search, and runtime logs with since (15m, 2h, 1d or a time). It answers with what it has; it does not stream.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "errors": {
+            "description": "true: keep only error lines and Kubernetes Warning events, each with the next 2 lines of the same pod (stack traces)",
+            "type": "boolean"
+          },
+          "id": {
+            "description": "the build's or deployment's ID; required for build and deployment logs, and with preview selects one of its builds (bld_...) or deployments (dpl_...)",
+            "type": "string"
+          },
+          "lines": {
+            "description": "how many of the last lines to keep, 1 to 500 (default 200)",
+            "type": "integer"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "preview": {
+            "description": "with source preview: the preview's ID or its pull request's number",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "search": {
+            "description": "keep only lines containing this text, any case (1 to 200 characters)",
+            "type": "string"
+          },
+          "since": {
+            "description": "runtime and running preview logs: from a time, as a duration back from now (30s, 15m, 2h, 1d; at most 7d) or an RFC 3339 time",
+            "type": "string"
+          },
+          "source": {
+            "description": "build, deployment, runtime or preview",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "source"
+        ],
+        "type": "object"
+      },
+      "name": "get_logs",
+      "title": "Get logs"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get a cube's resource use, traffic and health over a recent window: a summary (CPU and memory against their limits, requests, 5xx share, latency, restarts, replicas); series and pods add the points.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "pods": {
+            "description": "also the points of each pod (implies series)",
+            "type": "boolean"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "range": {
+            "description": "1h, 6h, 24h, 7d or 30d (default 1h)",
+            "type": "string"
+          },
+          "series": {
+            "description": "also the series' points (totals)",
+            "type": "boolean"
+          },
+          "since": {
+            "description": "instead of range: from a time, as a duration back from now (30m, 2h, 3d; at most 30d) or an RFC 3339 time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "get_metrics",
+      "title": "Get a cube's metrics"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get an organization: its plan, the plan's limits (cubes, sizes, build minutes, bandwidth), what it uses of them and this month's usage by cube.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_organization",
+      "title": "Get an organization"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get one project.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID",
+            "type": "string"
+          }
+        },
+        "required": [
+          "project"
+        ],
+        "type": "object"
+      },
+      "name": "get_project",
+      "title": "Get a project"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Get one release by its build or deployment ID: its status, whether it has ended, and its error.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "release": {
+            "description": "the release's ID: a build (bld_...) or a deployment (dpl_...)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "release"
+        ],
+        "type": "object"
+      },
+      "name": "get_release",
+      "title": "Get a release"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List a repository's folders, to pick a monorepo app's app_root for create_application or update_application.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "a cube whose repository to read",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "with application: the cube's project (optional when its slug is unique)",
+            "type": "string"
+          },
+          "ref": {
+            "description": "a branch, tag or commit (default the repository's default branch, or the link's)",
+            "type": "string"
+          },
+          "repository": {
+            "description": "owner/name or a GitHub link; or name a cube with application to read its repository",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_repository_folders",
+      "title": "List a repository's folders"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List an organization's cubes (applications), optionally one project's, with their state, URL and last release, one line each; repository and app_root find a repository's cubes.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "app_root": {
+            "description": "only the cubes of this folder of the repository (the app_root they deploy)",
+            "type": "string"
+          },
+          "cursor": {
+            "description": "the next_cursor of the previous page",
+            "type": "string"
+          },
+          "limit": {
+            "description": "how many cubes, 1 to 100 (default 20)",
+            "type": "integer"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "only this project's cubes (slug or ID)",
+            "type": "string"
+          },
+          "q": {
+            "description": "search in names and slugs",
+            "type": "string"
+          },
+          "repository": {
+            "description": "only the cubes of this GitHub repository: owner/name or its link",
+            "type": "string"
+          },
+          "state": {
+            "description": "only cubes in this state",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_applications",
+      "title": "List cubes"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List the organization's managed Postgres databases (or one project's), with their status, usage and the cubes that use them.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "only this project's databases (default every project's)",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_databases",
+      "title": "List databases"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List a cube's custom domains with their status and the DNS records each needs.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "list_domains",
+      "title": "List custom domains"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List the versions of a cube's environment variables, newest first: who changed what and when.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "cursor": {
+            "description": "the next_cursor of the previous page",
+            "type": "string"
+          },
+          "limit": {
+            "description": "how many versions, 1 to 100 (default 20)",
+            "type": "integer"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "list_env_versions",
+      "title": "List env versions"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List the GitHub repositories the organization's GitHub connections cover. Public repositories need no connection: create_application takes their link.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "description": "the next_cursor of the previous page",
+            "type": "string"
+          },
+          "limit": {
+            "description": "how many repositories, 1 to 100 (default 30)",
+            "type": "integer"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "q": {
+            "description": "search in owner/name",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_github_repositories",
+      "title": "List GitHub repositories"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List the Cubecen organizations you belong to (with an API key: the key's organization). Other tools take an organization by slug or ID.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "after": {
+            "description": "the next_cursor of the previous page",
+            "type": "string"
+          },
+          "limit": {
+            "description": "how many organizations to list, 1 to 100 (default 25)",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_organizations",
+      "title": "List organizations"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List a cube's pull request previews (their pull request, status and URL), and whether previews are on and why they cannot be.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "list_previews",
+      "title": "List previews"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List an organization's projects. Cubes (applications) live in projects.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "description": "the next_cursor of the previous page",
+            "type": "string"
+          },
+          "limit": {
+            "description": "how many projects, 1 to 100 (default 20)",
+            "type": "integer"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "list_projects",
+      "title": "List projects"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "List a cube's releases (builds and deployments), newest first.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "cursor": {
+            "description": "the next_cursor of the previous page",
+            "type": "string"
+          },
+          "limit": {
+            "description": "how many releases, 1 to 50 (default 20)",
+            "type": "integer"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "list_releases",
+      "title": "List releases"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Deploy the live build again, with the current variables.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "redeploy",
+      "title": "Redeploy"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Build an open preview's pull request head again.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "preview": {
+            "description": "the preview's ID or its pull request's number",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "preview"
+        ],
+        "type": "object"
+      },
+      "name": "redeploy_preview",
+      "title": "Redeploy a preview"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Remove a custom domain from a cube: it stops serving the cube. Ask the user to confirm first.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "domain": {
+            "description": "the domain's hostname or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "domain"
+        ],
+        "type": "object"
+      },
+      "name": "remove_domain",
+      "title": "Remove a custom domain"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Close a preview until its pull request's next push. Ask the user to confirm first.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "preview": {
+            "description": "the preview's ID or its pull request's number",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "preview"
+        ],
+        "type": "object"
+      },
+      "name": "remove_preview",
+      "title": "Remove a preview"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Give a database a new password: anything outside Cubecen using the old one stops connecting; cubes get the new one with their next deploy or redeploy. Ask the user to confirm first.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "database": {
+            "description": "the database's slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a database with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "database"
+        ],
+        "type": "object"
+      },
+      "name": "reset_database_password",
+      "title": "Reset a database's password"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Bring back an earlier version of a cube's environment variables as a new version. It does not deploy: a deploy or redeploy applies it. Ask the user to confirm first, showing diff_env.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "version": {
+            "description": "the ID of the version to bring back, from list_env_versions",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "version"
+        ],
+        "type": "object"
+      },
+      "name": "restore_env",
+      "title": "Restore an env version"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Deploy an earlier release's build, with the variables it shipped with.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "release": {
+            "description": "the release's ID: a build (bld_...) or a deployment (dpl_...)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "release"
+        ],
+        "type": "object"
+      },
+      "name": "rollback",
+      "title": "Roll back"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Set and unset variables and secrets in one change. It does not deploy: a deploy or redeploy applies it.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "set": {
+            "description": "variables and secrets to add or change",
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "build": {
+                  "description": "also available while building",
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "key": {
+                  "type": "string"
+                },
+                "previews": {
+                  "description": "a secret: also given to preview deployments (a variable always is)",
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "secret": {
+                  "description": "true for a secret, whose value is never shown again; false for a plain variable; left out, an existing key keeps its kind and a new one is a variable",
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
+                },
+                "value": {
+                  "description": "the value; leave it out to change only an existing key's build or previews mark",
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                }
+              },
+              "required": [
+                "key"
+              ],
+              "type": "object"
+            },
+            "type": [
+              "null",
+              "array"
+            ]
+          },
+          "unset": {
+            "description": "keys to remove",
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "null",
+              "array"
+            ]
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "set_env",
+      "title": "Set environment variables"
+    },
+    {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Turn a cube's pull request previews on or off. Off closes every open preview. On needs a repository connected through GitHub.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "true builds a preview of every pull request into the tracked branch; false closes them all",
+            "type": "boolean"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "application",
+          "enabled"
+        ],
+        "type": "object"
+      },
+      "name": "set_previews",
+      "title": "Turn previews on or off"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Change a cube's settings; only the fields given change. A deploy applies build and start changes.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "app_root": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "build_command": {
+            "description": "empty clears it",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "deploy_branch": {
+            "description": "empty tracks the repository's default branch",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "output_directory": {
+            "description": "empty clears it",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "port": {
+            "description": "0 clears it (the default, 8080)",
+            "type": [
+              "null",
+              "integer"
+            ]
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "push_to_deploy": {
+            "type": [
+              "null",
+              "boolean"
+            ]
+          },
+          "size": {
+            "description": "empty follows the plan",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "slug": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "start_command": {
+            "description": "empty clears it",
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "update_application",
+      "title": "Update a cube"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Rename a database or change its slug; only the fields given change.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "database": {
+            "description": "the database's slug or ID",
+            "type": "string"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a database with the same slug",
+            "type": "string"
+          },
+          "slug": {
+            "description": "refused while a cube's env refers to the database",
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "required": [
+          "database"
+        ],
+        "type": "object"
+      },
+      "name": "update_database",
+      "title": "Rename a database"
+    },
+    {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "readOnlyHint": false
+      },
+      "description": "Rename a project or change its slug or description; only the fields given change.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "empty clears it",
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID",
+            "type": "string"
+          },
+          "slug": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "required": [
+          "project"
+        ],
+        "type": "object"
+      },
+      "name": "update_project",
+      "title": "Update a project"
+    },
+    {
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true
+      },
+      "description": "Wait up to timeout seconds for a release to end; answers its status either way (terminal says whether it ended), and a failed one's diagnosis. After a git push, give commit instead of release to wait for that commit's release.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "description": "the cube's (application's) slug or ID",
+            "type": "string"
+          },
+          "commit": {
+            "description": "after a git push: the pushed commit's SHA (7 to 40 hex characters), to wait for its release",
+            "type": "string"
+          },
+          "organization": {
+            "description": "the organization's slug or ID; optional with an API key, or when you belong to one organization",
+            "type": "string"
+          },
+          "project": {
+            "description": "the project's slug or ID; optional when no other project has a cube with the same slug",
+            "type": "string"
+          },
+          "release": {
+            "description": "the release's ID: a build (bld_...) or a deployment (dpl_...); or give commit instead",
+            "type": "string"
+          },
+          "timeout": {
+            "description": "seconds to wait, 1 to 60 (default 60)",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "application"
+        ],
+        "type": "object"
+      },
+      "name": "wait_for_release",
+      "title": "Wait for a release"
+    }
+  ]
+}
