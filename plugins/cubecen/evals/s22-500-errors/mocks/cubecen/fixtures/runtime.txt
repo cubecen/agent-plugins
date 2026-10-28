@@ -1,0 +1,7 @@
+4 of 1000 lines matched errors, since 2026-10-28T09:00:00Z, with 2 lines of context each
+
+2026-10-28T09:42:01Z 7784d-fk4jm | GET /api/orders 500 3ms
+2026-10-28T09:42:01Z 7784d-fk4jm | TypeError: Cannot read properties of undefined (reading 'trim')
+2026-10-28T09:42:01Z 7784d-fk4jm |     at module.exports (/app/routes/orders.js:14:26)
+2026-10-28T09:42:01Z 7784d-fk4jm |     at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+2026-10-28T09:43:10Z 7784d-fk4jm | GET /api/orders 500 2ms

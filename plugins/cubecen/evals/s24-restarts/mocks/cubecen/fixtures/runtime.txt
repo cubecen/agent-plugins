@@ -1,0 +1,7 @@
+5 of 1000 lines matched errors, since 2026-10-28T05:00:00Z, with 2 lines of context each
+
+10:31:12 event Warning OOMKilling Pod/app-7784d-fk4jm: Memory cgroup out of memory: Killed process 1 (node)
+10:31:13 event Warning BackOff Pod/app-7784d-fk4jm: Back-off restarting failed container app
+2026-10-28T10:31:11Z 7784d-fk4jm | <--- Last few GCs --->
+2026-10-28T10:31:11Z 7784d-fk4jm | FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+2026-10-28T10:31:15Z 9a2b-c3d4 | Listening

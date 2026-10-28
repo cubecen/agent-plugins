@@ -1,0 +1,5 @@
+3 of 1000 lines matched search "ms"
+
+2026-10-28T09:10:02Z 7784d-fk4jm | GET /api/report 200 2412ms
+2026-10-28T09:10:05Z 7784d-fk4jm | GET / 200 2210ms
+2026-10-28T09:11:40Z 7784d-fk4jm | GET /api/report 200 2650ms
