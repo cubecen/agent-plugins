@@ -3,5 +3,5 @@ type: regex
 target: mock_calls
 pattern: '\S'
 match: not_contains
-arm: both
+arm: with-only
 ---

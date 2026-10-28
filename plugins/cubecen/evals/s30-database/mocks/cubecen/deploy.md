@@ -1,5 +1,5 @@
-Building bld_15 and deploying it when it succeeds: call wait_for_release with release bld_15 until it is terminal
+Redeploying build bld_5 (unchanged): call wait_for_release with release dpl_22 until it is terminal
 
 {
-  "id": "bld_15"
+  "id": "bld_5"
 }
