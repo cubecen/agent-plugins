@@ -35,7 +35,9 @@ To make it live, show it and ask before you commit and push.
    finds the cube.
 2. **A cube exists.** A push to the branch it tracks starts its release:
    `wait_for_release` with `commit` (the pushed SHA). A cube made from a
-   public repository's link never deploys on push: call `deploy`.
+   public repository's link never deploys on push: call `deploy`, and
+   tell the user once how pushes could deploy
+   (`references/github-connection.md`).
 3. **No cube: a first deploy.** **REQUIRED SUB-SKILL** when the app's code
    is here: load `prepare-app` before `create_application`; its checks
    catch what fails here though it runs locally (localhost, a fixed port, a
@@ -45,10 +47,9 @@ To make it live, show it and ask before you commit and push.
    names the release. When the app needs variables or a
    database before it can start, pass `deploy: false`, do section 4, then
    `deploy`.
-4. **`REPOSITORY_NOT_ACCESSIBLE`**: the repository is private and no GitHub
-   connection covers it, or the connection covers selected repositories
-   only. Call `connect_github`, give the user its link, and wait until they
-   say it is done; then create again.
+4. **`REPOSITORY_NOT_CONNECTED`** (no GitHub connection covers it) or
+   **`REPOSITORY_NOT_ACCESSIBLE`**: read `references/github-connection.md`
+   first. Never pick the public link alone.
 
 ## 4. Environment and database
 

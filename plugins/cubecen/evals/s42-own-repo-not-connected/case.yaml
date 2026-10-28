@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: s42-own-repo-not-connected
+context:
+  scaffold_script: scaffold.sh

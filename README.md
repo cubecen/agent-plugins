@@ -58,8 +58,10 @@ see [cubecen.com/docs](https://cubecen.com/docs).
 
 - Cubecen builds from GitHub, so the agent deploys what is pushed; it asks
   before it commits, pushes or creates a repository.
-- Public repositories deploy right away. For a private repository the agent
-  gives you a link to connect GitHub once.
+- With GitHub connected, every push to the tracked branch deploys. For your
+  own repository the agent offers the link to connect GitHub before the
+  first deploy; someone else's public repository can deploy from its link,
+  without deploys on push.
 - Deleting, rolling back and other destructive tools ask you first.
   Passwords and secrets are never printed.
 

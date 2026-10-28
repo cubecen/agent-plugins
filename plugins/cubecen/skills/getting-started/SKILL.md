@@ -27,8 +27,11 @@ in the line) and a paused cube.
 
 ## The first deploy
 
-- Public repositories deploy as they are. Private ones need GitHub
-  connected once: `connect_github` gives the link to give the user.
+- A repository the organization's GitHub connection covers deploys on
+  every push. For the user's own repository without one, offer
+  `connect_github` (its link is for the user to open) before the first
+  deploy. Someone else's public repository can deploy from its link
+  (`from_public_link`), without deploys on push.
 - Offer to deploy the current repository; when the user says yes, follow
   the `deploy` skill. Create nothing before that yes.
 

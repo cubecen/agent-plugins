@@ -193,6 +193,10 @@
           "description": {
             "type": "string"
           },
+          "from_public_link": {
+            "description": "true: make the cube from the public repository's link when no GitHub connection covers it; pushes then do not deploy it. Only after the user chose it, or for someone else's public repository",
+            "type": "boolean"
+          },
           "installation_id": {
             "description": "rarely needed: a GitHub connection's ID (installation_id in list_github_repositories), to pick one when several cover the repository",
             "type": "string"
@@ -232,7 +236,7 @@
             ]
           },
           "repository": {
-            "description": "the GitHub repository: owner/name or a link (https://github.com/owner/name, or a /tree/\u003cbranch\u003e[/\u003cfolder\u003e] link). The organization's GitHub connection is used when it covers the repository, else the public repository",
+            "description": "the GitHub repository: owner/name or a link (https://github.com/owner/name, or a /tree/\u003cbranch\u003e[/\u003cfolder\u003e] link). The organization's GitHub connection is used when it covers the repository; else the public repository, only with from_public_link",
             "type": "string"
           },
           "repository_url": {
