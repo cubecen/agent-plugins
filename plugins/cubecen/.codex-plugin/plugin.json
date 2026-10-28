@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Cubecen",
     "shortDescription": "Deploy your app from GitHub and get a live URL",
-    "longDescription": "Deploy the repository you are working on to Cubecen and get a live URL. The agent checks the app is ready (port, start command, framework settings), creates the cube, waits for the release, wires a managed Postgres database, and reads the build and runtime logs to fix a failed deploy.",
+    "longDescription": "Deploy the repository you are working on to Cubecen and get a live URL. The agent checks the app is ready (port, start command, framework settings), creates the cube and waits for the release. When a deploy fails or the live app errors, it reads the release's diagnosis, the logs and the metrics, fixes the cause and waits again. It also sets variables and secrets, wires a managed Postgres database, connects a domain, turns on pull request previews and shows your plan's usage.",
     "developerName": "Cubecen",
     "category": "Coding",
     "capabilities": [

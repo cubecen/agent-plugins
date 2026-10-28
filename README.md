@@ -19,8 +19,11 @@ The plugin connects your agent to the Cubecen MCP server
 | `database` | Managed Postgres: creates it, wires `DATABASE_URL`, runs migrations (Prisma, Drizzle, Django, Rails, Alembic…) |
 | `domain` | A custom domain: the DNS records at your registrar (Cloudflare, Namecheap, GoDaddy, Route 53…), verification and HTTPS |
 
-After a `git push`, a hook reminds the agent that the push started a
-release, so it waits for that commit's release instead of guessing.
+After a `git push` to GitHub, a hook tells the agent which commit went
+out, so it waits for that commit's release when a cube tracks the branch.
+The hook runs after every shell command the agent runs: it reads the
+command, runs `git` locally and uses no network; for anything but a push it
+prints nothing.
 
 ## Claude Code
 
