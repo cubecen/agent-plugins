@@ -33,5 +33,16 @@ Organization acme (you are an owner) is on the Free plan (cubes up to large); 1 
     "over_limit": [
       "build_minutes"
     ]
+  },
+  "usage": {
+    "from": "2026-10-01",
+    "to": "2026-11-01",
+    "as_of": "2026-10-28T11:00:00Z",
+    "totals": {
+      "build_minutes": 300,
+      "bandwidth_bytes": 400000000,
+      "instance_hours": 410.5,
+      "requests": 120344
+    }
   }
 }

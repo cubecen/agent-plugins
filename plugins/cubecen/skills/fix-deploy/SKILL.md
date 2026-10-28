@@ -1,6 +1,6 @@
 ---
 name: fix-deploy
-description: Use when a Cubecen build or deployment failed (BUILD_FAILED, DEPLOY_FAILED), the user asks why their Cubecen deploy broke, or Cubecen reports BUILD_NOT_DETECTED, START_COMMAND_NOT_FOUND, APP_NOT_LISTENING, APP_CRASHED, APP_OUT_OF_MEMORY or QUOTA_EXCEEDED.
+description: Use when a Cubecen build or deployment failed (BUILD_FAILED, DEPLOY_FAILED), the user asks why their Cubecen deploy broke, or Cubecen reports BUILD_NOT_DETECTED, START_COMMAND_NOT_FOUND, APP_NOT_LISTENING, APP_CRASHED, APP_OUT_OF_MEMORY, QUOTA_EXCEEDED or PLAN_LIMIT_REACHED.
 ---
 
 # Fix a failed Cubecen deploy
@@ -36,8 +36,8 @@ Open the file and line the log points to.
   `redeploy`. A key the build reads needs `build: true` and `deploy`: a
   redeploy reuses the old build. A value you do not have comes from the
   user; never invent one, and ask before copying it from a local `.env`.
-- **Not the app** (`QUOTA_EXCEEDED`, build minutes used up): say so; no
-  code change. Deploy again later, or the plan page the answer links.
+- **Not the app** (a quota or the plan's limit, see Codes): say so; no
+  code change.
 
 Then wait for the new release, and repeat if it fails differently.
 
@@ -63,9 +63,9 @@ Your last message is the report, in this order:
 | `APP_CRASHED` | the log's error: often a missing variable or an unreachable database |
 | `APP_OUT_OF_MEMORY` | the code that fills memory at start or per request; or a bigger size within the plan |
 | `QUOTA_EXCEEDED` | nothing in the app: deploy again later |
+| `PLAN_LIMIT_REACHED` | build minutes come back on `get_organization`'s `usage.to`; `redeploy` (no build) works meanwhile; or a bigger plan |
 | `ENV_REFERENCE_BROKEN` | `get_env`, then point the named variable at an existing cube or database, or unset it |
 
 ## Rules
 
 - Never commit, push or print a secret without the user's yes.
-- Destructive tools (`rollback`, `restore_env`, `delete_*`…): confirm first.
